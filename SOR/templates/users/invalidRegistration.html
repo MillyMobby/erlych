@@ -1,0 +1,15 @@
+{% extends "store/base.html" %} {% load static %} {% block title %}invalid{%endblock %} 
+
+{% block content %}
+<div class="container" style="max-width: 1000px">
+    <div class="col-12">
+      <h1 class="h2 text-white">Registrazione non valida</h1>
+    </div>
+    <div class="col-12 d-flex justify-content-between">
+      <div class ="text-white">riprova a registrarti cliccando sull'icona <b>account</b> e inserisci con attenzione i tuoi dati</div>
+      <div class ="text-white"><a href="{% url 'login:register' %}">Riprova</a></div>
+    </div>
+    <hr />
+  </div>
+  
+{% endblock %}

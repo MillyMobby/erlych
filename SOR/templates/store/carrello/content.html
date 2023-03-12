@@ -1,0 +1,90 @@
+{% extends "store/base.html" %}
+{% load static %}
+{% block title %}Carrello{% endblock %}
+{% block content %}
+  
+<div class="album py-5 bg-dark text-white">
+
+<main class="pt-5">
+    <div class="container">
+     
+      <h1 class="h7">Carrello Prodotti                                                                                                  
+        
+      </h1>
+        {% for item in carrello %}
+        {% with product=item.product %}
+        <div data-index="{{product.id}}" class="row mb-4 product-item">
+          <div class="col-md-3 col-lg-2 order-md-first bg-dark">
+            <img class="img-fluid mx-auto d-block" alt="Responsive image" src="{{ product.cover.url }}">
+          </div>
+          <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
+            <a href="{{ product.get_absolute_url }}" class="text-decoration-none text-reset">
+              <h1 class="h5 pt-2">{{ product.title }}</h1>
+            </a>
+            <div class="border">
+              <div class="col border-bottom">
+                <div class="row p-3">
+                  <div class="col-6">Vinile</div>
+                  <div class="col-6 text-end"><span class="h6 fw-bold">€ {{ product.price }}</span></div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="row p-3">
+                  <div class="col-12">
+                    Quantità {{item.amount}}
+                    
+                    <button type="button" id="delete-button" data-index="{{product.id}}"
+                      class="btn btn-outline-secondary btn-sm delete-button">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+        {% if carrello.get_tot == 0%} 
+          Aggiungi qualcosa al tuo carrello!
+          <br>
+          <div class ="text-white"><a href="/">Inizia lo shopping!</a></div>
+        {% else %}
+        <div class="col-12 text-end text-bg-light">
+            <div class="h6 fw-bold">Sub Total: € <div id="subtotal" class="d-inline-flex">{{carrello.get_tot}}</div></div>
+            <div class="col-md-5 col-lg-4 order-md-last p-0 order-3">
+          <div class="d-grid gap-2 ">
+            <a role="button" href="#" class="btn btn-success fw-bold" type="button">Checkout</a>
+           
+          </div>
+        </div>      
+          </div>
+        </div>
+        {%endif%}
+        
+    </main>
+</div>
+
+    <script>
+      $(document).on('click', '#delete-button', function (e) {
+        e.preventDefault(); 
+        var prodid = $(this).data('index');     
+        $.ajax({
+            type: 'POST',
+            url: '{% url "carrello:carrello_remove" %}',
+            data: {
+                productID: $(this).data('index'),             
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post'
+            },
+            success: function (json) {
+              $('.product-item[data-index="' + prodid + '"]').remove();
+              document.getElementById("subtotal").innerHTML = json.subtotal;
+              document.getElementById("basket-qty").innerHTML = json.qty
+            },
+            error: function (xhr, errmsg, err) {}
+        });
+    })
+    </script>
+
+{% endblock %}

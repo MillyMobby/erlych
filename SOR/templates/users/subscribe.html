@@ -1,0 +1,60 @@
+{% extends "store/base.html" %}
+{% block title %}register{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    
+        <div class="col-md-12">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-7  mx-auto">
+                             <form class="account-form p-4 rounded col-lg-10 mx-auto" action="." method="post">
+                                {% csrf_token %}
+                                <h3 class="mb-2 font-weight-bold text-white">Crea un account</h3>
+                                <p class="mb-4 text-white">è gratis, facile e veloce</p>
+
+                                {% if form.errors %}
+                                <p class="text-white">Correggi i seguenti errori:</p>
+                                {% if form.errors %}
+                                <div class="alert alert-primary" role="alert">
+                                    Errore: Username o Password non corretti!
+                                </div>
+                                {% endif %}
+                                {% for field in form %}
+                                {% if field.errors %}
+                                <div class="alert alert-primary" role="alert">
+                                    {{ field.label }}: {{ field.errors|striptags }}
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                                {% endif %}
+
+                                <label class="text-white">inserisci il tuo username<span class="text-muted small">
+                                        (Campo Obbligatorio)</span></label>
+                                {{ form.username }}
+                                <label class="text-white">Email<span class="text-muted small">
+                                        (Campo Obbligatorio)</span></label>
+                                {{ form.email }}
+                                <label  class="text-white">Password<span class="text-muted mb-4">
+                                        </span></label>
+                                 <small class="form-text text-muted mb-4 small">
+                                    Consigliata con almeno 8 caratteri e 1 numero
+                                </small>
+                                {{ form.password }}
+                                <label class="text-white">Ripeti la password<span class="text-muted small">
+                                        (Campo Obbligatorio)</span></label>
+                                {{ form.password2 }}
+                                <button class="btn btn-primary btn-block py-2 mb-4 mt-5 fw500 w-100" type="submit">Iscriviti</button>
+                                <p class="text-center">
+                                    <a href="{% url "login:login" %}">Hai già un account?</a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "./base.html" %}
+
+{% load static %}
+{% block title %}Home{% endblock %}  
+<div class="p-4 p-md-5 mb-4 rounded text-bg-light">
+{% block content %}
+<main>
+
+  
+  <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner center">
+      <ol class="carousel-indicators">
+        <li data-target="carouselExampleSlidesOnly" data-slide-to="0" class="active"></li>
+        <li data-target="carouselExampleSlidesOnly" data-slide-to="1"></li>
+        <li data-target="carouselExampleSlidesOnly" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-item active">
+        <div class="d-flex justify-content-center">
+          <img src="https://www.pcprofessionale.it/wp-content/uploads/2017/12/digitalizzare-vinile-ape.jpg" class="d-block w-75" alt="..."> </div>
+      </div>
+      <div class="carousel-item">
+        <div class="d-flex justify-content-center">
+        <img src="https://images.wallpapersden.com/image/download/music-all-day-hd-scifi_bG1sZmWUmZqaraWkpJRmZWdprWpsaw.jpg" class="d-block w-75" alt="..."></div>
+      </div>
+      <div class="carousel-item">
+        <div class="d-flex justify-content-center">
+        <img src="https://collart.app/wp-content/uploads/sites/8/2021/12/collart_website_function_08_banner-maker02-template-pro-1024x576.jpg" class="d-block w-75" alt="..."></div>
+      </div>
+    </div>
+    
+  </div>
+
+  <main class="container">
+  <div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
+    <div class="col-md-6 px-0">
+      <h1 class="display-4 fst-italic"><p class="text-white">Il negozio di dischi online più bello del mondo! </p></h1>
+      <p class="lead my-3 text-white">Siamo un piccolo negozio di musica indipendente soltanto per veri intenditori!
+        Compra e pre-ordina tutti i dischi, vinili e box set dei tuoi artisti preferiti! Inizia lo shopping adesso!</p>
+      
+    </div>
+  </div>
+  
+  </main>
+  
+    <div class="album py-5 bg-danger rounded">
+      
+      <div class="container">
+  
+        <h3 class="text-white">What's  <span class="badge badge-secondary bg-dark">New</span></h3> <br>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+  
+          {% for product in products %}
+  
+          <div class="col">
+            <div class="card shadow-sm">
+              <img class="img-fluid" alt="Responsive image" src="{{ product.cover.url }}">
+              <div class="card-body">
+                <p class="card-text">
+                  <a class="text-dark text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted"> {{ product.artist }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          {% endfor %}
+  
+        </div>
+      </div>
+    </div>
+
+  </main>
+  
+  <script language="JavaScript" type="text/javascript">
+    $(document).ready(function(){
+      $('.carousel').carousel({
+        interval: 2000
+      })
+    });    
+  </script>
+{% endblock %}
